@@ -1,6 +1,9 @@
 extends Node3D
-const Rules = preload("res://scripts/tetris_rules.gd")
-const RoundedCube = preload("res://scripts/rounded_cube.gd")
+
+signal completed(metrics: Dictionary)
+var personal_best: int = 0
+const Rules = preload("res://games/minigame/godot_party_default_russian_block/scripts/tetris_rules.gd")
+const RoundedCube = preload("res://games/minigame/godot_party_default_russian_block/scripts/rounded_cube.gd")
 const COLORS = [Color("5dd9ee"),Color("f7cd64"),Color("b49afa"),Color("7cdfbd"),Color("fb8596"),Color("81a9ff"),Color("f7a66d")]
 var rules = Rules.new()
 var cube: ArrayMesh
@@ -21,7 +24,7 @@ var overlay_title: Label
 var overlay_text: Label
 var pause_button: Button
 var elapsed := 0.0
-@export var speed_profile: Resource = preload("res://assets/speed_profile.tres")
+@export var speed_profile: Resource = preload("res://games/minigame/godot_party_default_russian_block/assets/speed_profile.tres")
 var gravity_time := 0.0
 var lock_time := 0.0
 var lock_resets := 0
@@ -31,7 +34,6 @@ var paused := false
 var demo := false
 var flash_time := 0.0
 var best := 0
-var save_path := "user://best.cfg"
 
 func _ready() -> void:
 	cube = RoundedCube.create_mesh()
@@ -50,9 +52,7 @@ func _ready() -> void:
 	ghost_material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	build_world()
 	build_hud()
-	var config := ConfigFile.new()
-	if config.load(save_path) == OK:
-		best = int(config.get_value("game", "best", 0))
+	best = personal_best
 	rules.reset()
 	refresh()
 	if "--demo" in OS.get_cmdline_user_args():
@@ -169,7 +169,6 @@ func build_hud() -> void:
 	label("Rounded forms. Classic rules.\nFind your rhythm, clear the rows.",Vector2(1325,754),17,Color("819ab2"))
 	pause_button = button("PAUSE   /   ESC",Rect2(1320,845,360,58),toggle_pause)
 	button("RESTART   /   R",Rect2(1320,917,360,58),restart)
-	button("PARTY MODES",Rect2(180,220,380,48),func(): get_tree().change_scene_to_file("res://main.tscn"))
 	label("PROTOTYPE 01",Vector2(181,1010),12,Color("415974"))
 	label("F11  DEMO     ·     F12  SCREENSHOT",Vector2(1319,1010),12,Color("415974"))
 	overlay = panel(Rect2(654,355,612,325),Color(0.03,0.07,0.12,0.97))
@@ -254,13 +253,11 @@ func refresh() -> void:
 	hold_label.text = "USED THIS TURN" if rules.hold_used else "C / SHIFT"
 	if rules.game_over:
 		best = max(best,rules.score)
-		var config := ConfigFile.new()
-		config.set_value("game","best",best)
-		config.save(save_path)
 		overlay_title.text = "GAME OVER"
 		overlay_text.text = "Score %d  ·  Best %d\nPress R to play again" % [rules.score,best]
 		overlay.show()
 		status_label.text = "SESSION COMPLETE"
+		completed.emit({"score": rules.score, "lines": rules.lines})
 
 func preview_piece(type:int,pixel:Vector2,s:float) -> void:
 	var container := SubViewportContainer.new()
@@ -295,12 +292,6 @@ func preview_piece(type:int,pixel:Vector2,s:float) -> void:
 
 func _unhandled_key_input(event:InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
-		return
-	if event.keycode == KEY_F12:
-		capture()
-		return
-	if event.keycode == KEY_F11:
-		set_demo()
 		return
 	if event.keycode == KEY_R:
 		restart()
@@ -422,12 +413,6 @@ func set_demo() -> void:
 	status_label.text = "DEMO · R FOR NEW GAME"
 	refresh()
 
-func capture() -> void:
-	await RenderingServer.frame_post_draw
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://screenshots"))
-	var path := "res://screenshots/01_gameplay.png"
-	var err := get_viewport().get_texture().get_image().save_png(path)
-	print("Screenshot: ",ProjectSettings.globalize_path(path)," result=",err)
 
 func _notification(what:int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and is_instance_valid(overlay) and not paused and not rules.game_over:
