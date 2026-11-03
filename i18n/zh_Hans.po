@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh_Hans\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "圆角俄罗斯方块"
+msgstr "圆角俄罗斯方块"
+
+msgid "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。"
+msgstr "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。"
