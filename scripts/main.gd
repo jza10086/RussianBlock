@@ -132,53 +132,77 @@ func tile(parent:Node3D,pos:Vector3,type:int,ghost:bool=false,scale_value:float=
 	parent.add_child(mesh)
 
 func build_hud() -> void:
-	var layer := CanvasLayer.new()
+	var layer: CanvasLayer = CanvasLayer.new()
 	add_child(layer)
 	hud = Control.new()
 	hud.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(hud)
-	label("ROUND / STACK",Vector2(180,88),34,Color("eff8ff"))
-	label("THE SOFT EDGE OF TETRIS",Vector2(182,137),14,Color("6d879e"))
-	label("01",Vector2(180,222),18,Color("64d9ea"))
-	label("SOLO SESSION",Vector2(221,220),18,Color("9db0c6"))
-	panel(Rect2(180,285,380,245),Color("101c2d"))
-	label("SCORE",Vector2(212,310),16,Color("819ab2"))
-	score_label = label("000000",Vector2(208,337),64,Color("f3f8fe"))
-	label("LEVEL",Vector2(214,443),14,Color("819ab2"))
-	level_label = label("01",Vector2(214,465),28,Color("eff8ff"))
-	label("LINES",Vector2(380,443),14,Color("819ab2"))
-	lines_label = label("00",Vector2(380,465),28,Color("eff8ff"))
-	panel(Rect2(180,552,380,192),Color("101c2d"))
-	label("HOLD",Vector2(212,575),16,Color("819ab2"))
-	hold_label = label("C  /  SHIFT",Vector2(400,575),14,Color("526f89"))
-	label("Keep one piece for later",Vector2(212,706),14,Color("526f89"))
-	label("MOVE",Vector2(184,794),14,Color("69839d"))
-	label("←  →",Vector2(361,788),24,Color("d2dfef"))
-	label("ROTATE",Vector2(184,836),14,Color("69839d"))
-	label("X     /     Z",Vector2(360,832),20,Color("d2dfef"))
-	label("SOFT DROP",Vector2(184,878),14,Color("69839d"))
-	label("↓",Vector2(361,871),24,Color("d2dfef"))
-	label("HARD DROP",Vector2(184,920),14,Color("69839d"))
-	label("↑ / SPACE",Vector2(361,918),18,Color("d2dfef"))
-	label("CLASSIC 10 × 20",Vector2(740,39),17,Color("93abc3"))
-	label("3D / SINGLE PLAYER",Vector2(1328,93),14,Color("6d879e"))
-	panel(Rect2(1320,155,360,514),Color("101c2d"))
-	label("UP NEXT",Vector2(1352,185),17,Color("b8cadd"))
-	label("7–BAG RANDOMIZER",Vector2(1352,627),13,Color("526f89"))
-	status_label = label("READY TO STACK",Vector2(1325,716),18,Color("6edeca"))
-	label("Rounded forms. Classic rules.\nFind your rhythm, clear the rows.",Vector2(1325,754),17,Color("819ab2"))
-	pause_button = button("PAUSE   /   ESC",Rect2(1320,845,360,58),toggle_pause)
-	button("RESTART   /   R",Rect2(1320,917,360,58),restart)
-	label("PROTOTYPE 01",Vector2(181,1010),12,Color("415974"))
-	label("F11  DEMO     ·     F12  SCREENSHOT",Vector2(1319,1010),12,Color("415974"))
-	overlay = panel(Rect2(654,355,612,325),Color(0.03,0.07,0.12,0.97))
-	overlay_title = label("PAUSED",Vector2(693,397),46,Color("eff8ff"))
-	overlay_text = label("Take a breath.\nESC / P to resume",Vector2(698,478),22,Color("91acc4"))
-	for item in [overlay_title,overlay_text]:
-		var old_pos: Vector2 = item.position
-		item.reparent(overlay)
-		item.position = old_pos-overlay.position
-	overlay.visible = false
+	var counters: VBoxContainer = VBoxContainer.new()
+	counters.position = Vector2(28, 24)
+	counters.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.add_child(counters)
+	var title: Label = label("ROUND / STACK", Vector2.ZERO, 26, Color("eff8ff"))
+	title.reparent(counters)
+	score_label = label("000000", Vector2.ZERO, 36, Color("f3f8fe"))
+	score_label.reparent(counters)
+	var progress: HBoxContainer = HBoxContainer.new()
+	progress.add_theme_constant_override("separation", 16)
+	counters.add_child(progress)
+	var level_title: Label = label("LEVEL", Vector2.ZERO, 18, Color("819ab2"))
+	level_title.reparent(progress)
+	level_label = label("01", Vector2.ZERO, 22, Color("eff8ff"))
+	level_label.reparent(progress)
+	var lines_title: Label = label("LINES", Vector2.ZERO, 18, Color("819ab2"))
+	lines_title.reparent(progress)
+	lines_label = label("00", Vector2.ZERO, 22, Color("eff8ff"))
+	lines_label.reparent(progress)
+	status_label = label("READY TO STACK", Vector2.ZERO, 20, Color("6edeca"))
+	status_label.reparent(counters)
+	var next_title: Label = label("UP NEXT", Vector2.ZERO, 22, Color("b8cadd"))
+	next_title.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	next_title.offset_left = -248
+	next_title.offset_right = -28
+	next_title.offset_top = 28
+	next_title.offset_bottom = 64
+	var hold_title: Label = label("HOLD", Vector2.ZERO, 22, Color("b8cadd"))
+	hold_title.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	hold_title.offset_left = 28
+	hold_title.offset_top = -286
+	hold_title.offset_right = 248
+	hold_title.offset_bottom = -250
+	hold_label = label("C / SHIFT", Vector2.ZERO, 18, Color("819ab2"))
+	hold_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	hold_label.offset_left = 28
+	hold_label.offset_top = -252
+	hold_label.offset_right = 248
+	hold_label.offset_bottom = -220
+	var guide: Label = label("← → 移动 · X / Z 旋转 · ↓ 软降\n↑ / 空格 硬降 · C 暂存 · R 重开", Vector2.ZERO, 20, Color("b8cadd"))
+	guide.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	guide.offset_left = -530
+	guide.offset_right = -28
+	guide.offset_top = -100
+	guide.offset_bottom = -28
+	guide.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	pause_button = button("暂停 / Esc", Rect2(28, 0, 200, 52), toggle_pause)
+	pause_button.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	pause_button.offset_left = 28
+	pause_button.offset_top = -80
+	pause_button.offset_right = 228
+	pause_button.offset_bottom = -28
+	overlay = panel(Rect2(0, 0, 612, 325), Color(0.03, 0.07, 0.12, 0.97))
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	overlay.offset_left = -306
+	overlay.offset_top = -162
+	overlay.offset_right = 306
+	overlay.offset_bottom = 163
+	overlay_title = label("PAUSED", Vector2.ZERO, 46, Color("eff8ff"))
+	overlay_title.reparent(overlay)
+	overlay_title.position = Vector2(40, 42)
+	overlay_text = label("Take a breath.\nESC / P to resume", Vector2.ZERO, 22, Color("91acc4"))
+	overlay_text.reparent(overlay)
+	overlay_text.position = Vector2(44, 123)
+	overlay.hide()
 
 func label(text:String,pos:Vector2,size:int,color:Color) -> Label:
 	var l := Label.new()
@@ -244,9 +268,9 @@ func refresh() -> void:
 			container.queue_free()
 		previews.clear()
 		for i in range(min(3,rules.queue.size())):
-			preview_piece(rules.queue[i],Vector2(1500,285+i*132),1.0 if i==0 else 0.85)
+			preview_piece(rules.queue[i], Vector2(-138, 150 + i * 126), 1.0 if i == 0 else 0.85, Vector2(1, 0))
 		if rules.held_type >= 0:
-			preview_piece(rules.held_type,Vector2(365,655),0.95)
+			preview_piece(rules.held_type, Vector2(138, -170), 0.95, Vector2(0, 1))
 	score_label.text = "%06d" % rules.score
 	level_label.text = "%02d" % rules.level
 	lines_label.text = "%02d" % rules.lines
@@ -259,9 +283,13 @@ func refresh() -> void:
 		status_label.text = "SESSION COMPLETE"
 		completed.emit({"score": rules.score, "lines": rules.lines})
 
-func preview_piece(type:int,pixel:Vector2,s:float) -> void:
+func preview_piece(type: int, pixel: Vector2, s: float, anchor: Vector2) -> void:
 	var container := SubViewportContainer.new()
-	container.position = pixel-Vector2(110,50)
+	container.anchor_left = anchor.x
+	container.anchor_right = anchor.x
+	container.anchor_top = anchor.y
+	container.anchor_bottom = anchor.y
+	container.position = pixel - Vector2(110, 50)
 	container.size = Vector2(220,100)
 	container.stretch = true
 	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
