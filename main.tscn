@@ -1,4 +1,40 @@
-[gd_scene load_steps=2 format=3]
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/party.gd" id="1"]
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/party.gd" id="party"]
+[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_russian_block/ffa_layout.tscn" id="ffa"]
+[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_russian_block/team_layout.tscn" id="team"]
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0.03137,0.05882,0.11373,1)
+ambient_light_source = 2
+ambient_light_color = Color(0.71765,0.78824,0.93725,1)
+ambient_light_energy = 0.28
+
 [node name="RoundStack" type="Node3D"]
-script = ExtResource("1")
+script = ExtResource("party")
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.436332,-0.523599,0)
+light_color = Color(0.93725,0.97647,1,1)
+light_energy = 0.72
+shadow_enabled = true
+
+[node name="Camera" type="Camera3D" parent="."]
+position = Vector3(0,0,32)
+projection = 1
+size = 24.0
+current = true
+
+[node name="FreeForAll" parent="." instance=ExtResource("ffa")]
+
+[node name="Team" parent="." instance=ExtResource("team")]
+visible = false
+
+[node name="GameHUD" parent="Team" index="0"]
+visible = false
+
+[editable path="Team"]

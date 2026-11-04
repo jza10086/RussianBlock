@@ -1,4 +1,622 @@
-[gd_scene load_steps=2 format=3]
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/main.gd" id="1"]
-[node name="RoundStack" type="Node3D"]
-script = ExtResource("1")
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/main.gd" id="1_npubv"]
+
+[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/piece_preview.gd" id="preview"]
+
+[sub_resource type="Environment" id="Environment_7s7xn"]
+background_mode = 1
+background_color = Color(0.03137255, 0.05882353, 0.11372549, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.7176471, 0.7882353, 0.9372549, 1)
+ambient_light_energy = 0.28
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c7rr1"]
+albedo_color = Color(0.0627451, 0.11372549, 0.1882353, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_mgrfp"]
+size = Vector3(10.35, 20.35, 0.32)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mli06"]
+shading_mode = 0
+albedo_color = Color(0.13725491, 0.20392157, 0.29803923, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_35pa2"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2sprw"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_thcyv"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ei573"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nl1u2"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_16d86"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0yivm"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_euay3"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uqjv0"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q3d6x"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kigmh"]
+size = Vector3(0.015, 20, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_locg7"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pcw7r"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q5kqw"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oqj73"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pmtke"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yrttt"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_aa7l4"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ixs5q"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_can4l"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3df5"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8gjon"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ots8l"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_211da"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v7utq"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a2g4k"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_urkye"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ab8l8"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kalja"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xolsd"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j3hjr"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nil2o"]
+size = Vector3(10, 0.015, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgofi"]
+albedo_color = Color(0.28235295, 0.4392157, 0.5411765, 1)
+metallic = 0.65
+
+[sub_resource type="BoxMesh" id="BoxMesh_jj68q"]
+size = Vector3(0.09, 20.45, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jna63"]
+size = Vector3(0.09, 20.45, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tscxo"]
+size = Vector3(10.45, 0.1, 0.4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t0hq0"]
+bg_color = Color(0.078431375, 0.15686275, 0.23137255, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.20784314, 0.31764707, 0.42352942, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23apw"]
+bg_color = Color(0.14509805, 0.27058825, 0.37254903, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.20784314, 0.31764707, 0.42352942, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0a144"]
+bg_color = Color(0.14509805, 0.27058825, 0.37254903, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.20784314, 0.31764707, 0.42352942, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gclmk"]
+bg_color = Color(0.03, 0.07, 0.12, 0.97)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1254902, 0.19215687, 0.2901961, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[node name="RoundStack" type="Node3D" unique_id=916966731]
+script = ExtResource("1_npubv")
+
+[node name="WorldEnvironment1" type="WorldEnvironment" parent="." unique_id=1948720462]
+environment = SubResource("Environment_7s7xn")
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=308382027]
+transform = Transform3D(0.8660254, 0.21130913, -0.45315388, 0, 0.90630776, 0.42261827, 0.5, -0.36599815, 0.7848855, 0, 0, 0)
+light_color = Color(0.9372549, 0.9764706, 1, 1)
+light_energy = 0.72
+shadow_enabled = true
+
+[node name="Camera3D3" type="Camera3D" parent="." unique_id=1097972857]
+transform = Transform3D(0.99681526, -0.00515612, 0.07957836, 0, 0.9979075, 0.06465741, -0.079745226, -0.06445149, 0.99472946, 3.2, 2.6, 40)
+projection = 1
+current = true
+size = 24.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1951144314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 7)
+light_color = Color(0.45490196, 0.6156863, 1, 1)
+light_energy = 0.35
+omni_range = 24.0
+
+[node name="Board" type="Node3D" parent="." unique_id=98899023]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65, 0)
+
+[node name="Blocks" type="Node3D" parent="Board" unique_id=1978090378]
+unique_name_in_owner = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Board" unique_id=831960066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.76)
+material_override = SubResource("StandardMaterial3D_c7rr1")
+mesh = SubResource("BoxMesh_mgrfp")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Board" unique_id=381724829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_35pa2")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Board" unique_id=100455303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_2sprw")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Board" unique_id=1622575025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_thcyv")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Board" unique_id=1006293401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_ei573")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Board" unique_id=931200521]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_nl1u2")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Board" unique_id=969926508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_16d86")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Board" unique_id=527429208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_0yivm")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="Board" unique_id=36232636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_euay3")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Board" unique_id=1672349544]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_uqjv0")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="Board" unique_id=844399059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_q3d6x")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="Board" unique_id=231510203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_kigmh")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="Board" unique_id=2107047061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_locg7")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="Board" unique_id=1963012835]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_pcw7r")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="Board" unique_id=112950654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_q5kqw")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="Board" unique_id=1464432159]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_oqj73")
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="Board" unique_id=421334330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_pmtke")
+
+[node name="MeshInstance3D19" type="MeshInstance3D" parent="Board" unique_id=484794684]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_yrttt")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="Board" unique_id=1506448438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_aa7l4")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="Board" unique_id=982424042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_ixs5q")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="Board" unique_id=523350676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_can4l")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="Board" unique_id=1956468932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_i3df5")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="Board" unique_id=879478605]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_8gjon")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="Board" unique_id=1317463331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_ots8l")
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="Board" unique_id=1353072954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_211da")
+
+[node name="MeshInstance3D27" type="MeshInstance3D" parent="Board" unique_id=100796820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_v7utq")
+
+[node name="MeshInstance3D28" type="MeshInstance3D" parent="Board" unique_id=1568423135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_a2g4k")
+
+[node name="MeshInstance3D29" type="MeshInstance3D" parent="Board" unique_id=1474364726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_urkye")
+
+[node name="MeshInstance3D30" type="MeshInstance3D" parent="Board" unique_id=842891101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_ab8l8")
+
+[node name="MeshInstance3D31" type="MeshInstance3D" parent="Board" unique_id=1668470437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_kalja")
+
+[node name="MeshInstance3D32" type="MeshInstance3D" parent="Board" unique_id=455021107]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_xolsd")
+
+[node name="MeshInstance3D33" type="MeshInstance3D" parent="Board" unique_id=2070259113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_j3hjr")
+
+[node name="MeshInstance3D34" type="MeshInstance3D" parent="Board" unique_id=1824514529]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -0.585)
+material_override = SubResource("StandardMaterial3D_mli06")
+mesh = SubResource("BoxMesh_nil2o")
+
+[node name="MeshInstance3D35" type="MeshInstance3D" parent="Board" unique_id=172474122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.18, 0, -0.45)
+material_override = SubResource("StandardMaterial3D_cgofi")
+mesh = SubResource("BoxMesh_jj68q")
+
+[node name="MeshInstance3D36" type="MeshInstance3D" parent="Board" unique_id=1994772692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.18, 0, -0.45)
+material_override = SubResource("StandardMaterial3D_cgofi")
+mesh = SubResource("BoxMesh_jna63")
+
+[node name="MeshInstance3D37" type="MeshInstance3D" parent="Board" unique_id=179642962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.2, -0.45)
+material_override = SubResource("StandardMaterial3D_cgofi")
+mesh = SubResource("BoxMesh_tscxo")
+
+[node name="GameHUD" type="CanvasLayer" parent="." unique_id=819340066]
+
+[node name="HUD" type="Control" parent="GameHUD" unique_id=57013680]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="VBoxContainer1" type="VBoxContainer" parent="GameHUD/HUD" unique_id=639762572]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 24.0
+offset_right = 28.0
+offset_bottom = 24.0
+mouse_filter = 2
+
+[node name="Label1" type="Label" parent="GameHUD/HUD/VBoxContainer1" unique_id=1410477972]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9372549, 0.972549, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "ROUND / STACK"
+
+[node name="ScoreLabel" type="Label" parent="GameHUD/HUD/VBoxContainer1" unique_id=505278391]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9529412, 0.972549, 0.99607843, 1)
+theme_override_font_sizes/font_size = 36
+text = "000000"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="GameHUD/HUD/VBoxContainer1" unique_id=1872352427]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label1" type="Label" parent="GameHUD/HUD/VBoxContainer1/HBoxContainer3" unique_id=565172563]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5058824, 0.6039216, 0.69803923, 1)
+theme_override_font_sizes/font_size = 18
+text = "LEVEL"
+
+[node name="LevelLabel" type="Label" parent="GameHUD/HUD/VBoxContainer1/HBoxContainer3" unique_id=558596494]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9372549, 0.972549, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "01"
+
+[node name="Label3" type="Label" parent="GameHUD/HUD/VBoxContainer1/HBoxContainer3" unique_id=26026469]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5058824, 0.6039216, 0.69803923, 1)
+theme_override_font_sizes/font_size = 18
+text = "LINES"
+
+[node name="LinesLabel" type="Label" parent="GameHUD/HUD/VBoxContainer1/HBoxContainer3" unique_id=436839920]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9372549, 0.972549, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "00"
+
+[node name="StatusLabel" type="Label" parent="GameHUD/HUD/VBoxContainer1" unique_id=329364661]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.43137255, 0.87058824, 0.7921569, 1)
+theme_override_font_sizes/font_size = 20
+text = "READY TO STACK"
+
+[node name="Label2" type="Label" parent="GameHUD/HUD" unique_id=1432745018]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -248.0
+offset_top = 28.0
+offset_right = -28.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.72156864, 0.7921569, 0.8666667, 1)
+theme_override_font_sizes/font_size = 22
+text = "UP NEXT"
+
+[node name="Label3" type="Label" parent="GameHUD/HUD" unique_id=1023627610]
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -286.0
+offset_right = 248.0
+offset_bottom = -250.0
+theme_override_colors/font_color = Color(0.72156864, 0.7921569, 0.8666667, 1)
+theme_override_font_sizes/font_size = 22
+text = "HOLD"
+
+[node name="HoldLabel" type="Label" parent="GameHUD/HUD" unique_id=613641165]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -252.0
+offset_right = 248.0
+offset_bottom = -220.0
+theme_override_colors/font_color = Color(0.5058824, 0.6039216, 0.69803923, 1)
+theme_override_font_sizes/font_size = 18
+text = "C / SHIFT"
+
+[node name="Label5" type="Label" parent="GameHUD/HUD" unique_id=925408771]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -530.0
+offset_top = -100.0
+offset_right = -28.0
+offset_bottom = -28.0
+theme_override_colors/font_color = Color(0.72156864, 0.7921569, 0.8666667, 1)
+theme_override_font_sizes/font_size = 20
+text = "← → 移动 · X / Z 旋转 · ↓ 软降
+↑ / 空格 硬降 · C 暂存 · R 重开"
+horizontal_alignment = 2
+
+[node name="PauseButton" type="Button" parent="GameHUD/HUD" unique_id=259567241]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -80.0
+offset_right = 228.0
+offset_bottom = -28.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_t0hq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_23apw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0a144")
+text = "暂停 / Esc"
+
+[node name="Overlay" type="Panel" parent="GameHUD/HUD" unique_id=821866570]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -306.0
+offset_top = -162.0
+offset_right = 306.0
+offset_bottom = 163.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gclmk")
+
+[node name="OverlayTitle" type="Label" parent="GameHUD/HUD/Overlay" unique_id=1062213405]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 42.0
+offset_right = 218.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0.9372549, 0.972549, 1, 1)
+theme_override_font_sizes/font_size = 46
+text = "PAUSED"
+
+[node name="OverlayText" type="Label" parent="GameHUD/HUD/Overlay" unique_id=621731441]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 44.0
+offset_top = 123.0
+offset_right = 229.0
+offset_bottom = 188.0
+theme_override_colors/font_color = Color(0.5686275, 0.6745098, 0.76862746, 1)
+theme_override_font_sizes/font_size = 22
+text = "Take a breath.
+ESC / P to resume"
+
+[node name="Next1" type="Control" parent="GameHUD/HUD"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_left = -248.0
+offset_right = -28.0
+offset_top = 100.0
+offset_bottom = 200.0
+mouse_filter = 2
+script = ExtResource("preview")
+cell_size = 26.0
+
+[node name="Next2" type="Control" parent="GameHUD/HUD"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_left = -248.0
+offset_right = -28.0
+offset_top = 226.0
+offset_bottom = 326.0
+mouse_filter = 2
+script = ExtResource("preview")
+cell_size = 22.0
+
+[node name="Next3" type="Control" parent="GameHUD/HUD"]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_left = -248.0
+offset_right = -28.0
+offset_top = 352.0
+offset_bottom = 452.0
+mouse_filter = 2
+script = ExtResource("preview")
+cell_size = 22.0
+
+[node name="Hold" type="Control" parent="GameHUD/HUD"]
+unique_name_in_owner = true
+anchor_left = 0.0
+anchor_right = 0.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_right = 248.0
+offset_top = -220.0
+offset_bottom = -120.0
+mouse_filter = 2
+script = ExtResource("preview")
+cell_size = 24.0

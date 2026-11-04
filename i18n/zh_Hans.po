@@ -9,3 +9,12 @@ msgstr "圆角俄罗斯方块"
 
 msgid "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。"
 msgstr "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。"
+
+msgid "hud.result"
+msgstr "Score {score}  ·  Best {best}\nPress R to play again"
+
+msgid "hud.board_score"
+msgstr "{board}   {score}"
+
+msgid "hud.guide"
+msgstr "1 / 2{third}  SELECT\nTAB  NEXT BOARD\n← / →  MOVE\n↑ / SPACE  DROP\nX / Z  ROTATE\n↓  SOFT DROP\nC  HOLD\nQ / E  ATTACK\n, / .  AIM {aim}\nP / ESC  PAUSE\nR  RESTART\nF1  FREE FOR ALL\nF2  TEAM"

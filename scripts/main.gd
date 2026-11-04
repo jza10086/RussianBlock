@@ -1,6 +1,13 @@
 extends Node3D
 
 signal completed(metrics: Dictionary)
+const SoloRound = preload("res://games/protocols/godot_party_default_protocol/solo_round.gd")
+const DefaultText: Translation = preload("res://games/minigame/godot_party_default_russian_block/i18n/zh_Hans.po")
+var _i18n: RefCounted
+
+func hud_text(key: StringName, values: Dictionary) -> String:
+	return DefaultText.get_message(key).format(values) if _i18n == null else _i18n.text(key, values)
+
 var personal_best: int = 0
 const Rules = preload("res://games/minigame/godot_party_default_russian_block/scripts/tetris_rules.gd")
 const RoundedCube = preload("res://games/minigame/godot_party_default_russian_block/scripts/rounded_cube.gd")
@@ -9,11 +16,9 @@ var rules = Rules.new()
 var cube: ArrayMesh
 var materials: Array[StandardMaterial3D] = []
 var ghost_material: StandardMaterial3D
-var blocks := Node3D.new()
-var board_root := Node3D.new()
-var previews: Array[SubViewportContainer] = []
+var blocks: Node3D
+var previews: Array[Control] = []
 var preview_signature := ""
-var hud: Control
 var score_label: Label
 var level_label: Label
 var lines_label: Label
@@ -36,6 +41,8 @@ var flash_time := 0.0
 var best := 0
 
 func _ready() -> void:
+	if get_parent() is SoloRound:
+		_i18n = get_parent().api.i18n
 	cube = RoundedCube.create_mesh()
 	for color in COLORS:
 		var mat := StandardMaterial3D.new()
@@ -50,76 +57,23 @@ func _ready() -> void:
 	ghost_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	ghost_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	ghost_material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	build_world()
-	build_hud()
+	blocks = %Blocks
+	previews = [%Next1, %Next2, %Next3]
+	score_label = %ScoreLabel
+	level_label = %LevelLabel
+	lines_label = %LinesLabel
+	status_label = %StatusLabel
+	hold_label = %HoldLabel
+	overlay = %Overlay
+	overlay_title = %OverlayTitle
+	overlay_text = %OverlayText
+	pause_button = %PauseButton
+	pause_button.pressed.connect(toggle_pause)
 	best = personal_best
 	rules.reset()
 	refresh()
 	if "--demo" in OS.get_cmdline_user_args():
 		set_demo()
-
-func environment_for(parent:Node) -> void:
-	var environment := WorldEnvironment.new()
-	var env := Environment.new()
-	env.background_mode = Environment.BG_COLOR
-	env.background_color = Color("080f1d")
-	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	env.ambient_light_color = Color("b7c9ef")
-	env.ambient_light_energy = 0.28
-	env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
-	environment.environment = env
-	parent.add_child(environment)
-	var key := DirectionalLight3D.new()
-	key.rotation_degrees = Vector3(-25,-30,0)
-	key.light_color = Color("eff9ff")
-	key.light_energy = 0.72
-	key.shadow_enabled = true
-	parent.add_child(key)
-
-func build_world() -> void:
-	environment_for(self)
-	var camera := Camera3D.new()
-	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 24.0
-	camera.position = Vector3(3.2,2.6,40)
-	camera.look_at_from_position(camera.position,Vector3.ZERO)
-	camera.current = true
-	add_child(camera)
-	var rim := OmniLight3D.new()
-	rim.position = Vector3(8,6,7)
-	rim.omni_range = 24
-	rim.light_color = Color("749dff")
-	rim.light_energy = 0.35
-	add_child(rim)
-	add_child(board_root)
-	board_root.position.y = -0.65
-	board_root.add_child(blocks)
-	var back_mat := StandardMaterial3D.new()
-	back_mat.albedo_color = Color("101d30")
-	back_mat.roughness = 0.8
-	box(board_root,Vector3(10.35,20.35,0.32),Vector3(0,0,-0.76),back_mat)
-	var grid_mat := StandardMaterial3D.new()
-	grid_mat.albedo_color = Color("23344c")
-	grid_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	for x in range(11):
-		box(board_root,Vector3(0.015,20,0.012),Vector3(x-5,0,-0.585),grid_mat)
-	for y in range(21):
-		box(board_root,Vector3(10,0.015,0.012),Vector3(0,y-10,-0.585),grid_mat)
-	var edge := StandardMaterial3D.new()
-	edge.albedo_color = Color("48708a")
-	edge.metallic = 0.65
-	for x in [-5.18,5.18]:
-		box(board_root,Vector3(0.09,20.45,0.4),Vector3(x,0,-0.45),edge)
-	box(board_root,Vector3(10.45,0.10,0.4),Vector3(0,-10.2,-0.45),edge)
-
-func box(parent:Node3D,size:Vector3,pos:Vector3,mat:Material) -> void:
-	var mesh := MeshInstance3D.new()
-	var shape := BoxMesh.new()
-	shape.size = size
-	mesh.mesh = shape
-	mesh.position = pos
-	mesh.material_override = mat
-	parent.add_child(mesh)
 
 func tile(parent:Node3D,pos:Vector3,type:int,ghost:bool=false,scale_value:float=1.0) -> void:
 	var mesh := MeshInstance3D.new()
@@ -130,120 +84,6 @@ func tile(parent:Node3D,pos:Vector3,type:int,ghost:bool=false,scale_value:float=
 	if ghost:
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	parent.add_child(mesh)
-
-func build_hud() -> void:
-	var layer: CanvasLayer = CanvasLayer.new()
-	add_child(layer)
-	hud = Control.new()
-	hud.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(hud)
-	var counters: VBoxContainer = VBoxContainer.new()
-	counters.position = Vector2(28, 24)
-	counters.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hud.add_child(counters)
-	var title: Label = label("ROUND / STACK", Vector2.ZERO, 26, Color("eff8ff"))
-	title.reparent(counters)
-	score_label = label("000000", Vector2.ZERO, 36, Color("f3f8fe"))
-	score_label.reparent(counters)
-	var progress: HBoxContainer = HBoxContainer.new()
-	progress.add_theme_constant_override("separation", 16)
-	counters.add_child(progress)
-	var level_title: Label = label("LEVEL", Vector2.ZERO, 18, Color("819ab2"))
-	level_title.reparent(progress)
-	level_label = label("01", Vector2.ZERO, 22, Color("eff8ff"))
-	level_label.reparent(progress)
-	var lines_title: Label = label("LINES", Vector2.ZERO, 18, Color("819ab2"))
-	lines_title.reparent(progress)
-	lines_label = label("00", Vector2.ZERO, 22, Color("eff8ff"))
-	lines_label.reparent(progress)
-	status_label = label("READY TO STACK", Vector2.ZERO, 20, Color("6edeca"))
-	status_label.reparent(counters)
-	var next_title: Label = label("UP NEXT", Vector2.ZERO, 22, Color("b8cadd"))
-	next_title.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	next_title.offset_left = -248
-	next_title.offset_right = -28
-	next_title.offset_top = 28
-	next_title.offset_bottom = 64
-	var hold_title: Label = label("HOLD", Vector2.ZERO, 22, Color("b8cadd"))
-	hold_title.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	hold_title.offset_left = 28
-	hold_title.offset_top = -286
-	hold_title.offset_right = 248
-	hold_title.offset_bottom = -250
-	hold_label = label("C / SHIFT", Vector2.ZERO, 18, Color("819ab2"))
-	hold_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	hold_label.offset_left = 28
-	hold_label.offset_top = -252
-	hold_label.offset_right = 248
-	hold_label.offset_bottom = -220
-	var guide: Label = label("← → 移动 · X / Z 旋转 · ↓ 软降\n↑ / 空格 硬降 · C 暂存 · R 重开", Vector2.ZERO, 20, Color("b8cadd"))
-	guide.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	guide.offset_left = -530
-	guide.offset_right = -28
-	guide.offset_top = -100
-	guide.offset_bottom = -28
-	guide.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	pause_button = button("暂停 / Esc", Rect2(28, 0, 200, 52), toggle_pause)
-	pause_button.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	pause_button.offset_left = 28
-	pause_button.offset_top = -80
-	pause_button.offset_right = 228
-	pause_button.offset_bottom = -28
-	overlay = panel(Rect2(0, 0, 612, 325), Color(0.03, 0.07, 0.12, 0.97))
-	overlay.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	overlay.offset_left = -306
-	overlay.offset_top = -162
-	overlay.offset_right = 306
-	overlay.offset_bottom = 163
-	overlay_title = label("PAUSED", Vector2.ZERO, 46, Color("eff8ff"))
-	overlay_title.reparent(overlay)
-	overlay_title.position = Vector2(40, 42)
-	overlay_text = label("Take a breath.\nESC / P to resume", Vector2.ZERO, 22, Color("91acc4"))
-	overlay_text.reparent(overlay)
-	overlay_text.position = Vector2(44, 123)
-	overlay.hide()
-
-func label(text:String,pos:Vector2,size:int,color:Color) -> Label:
-	var l := Label.new()
-	l.text = text
-	l.position = pos
-	l.add_theme_font_size_override("font_size",size)
-	l.add_theme_color_override("font_color",color)
-	hud.add_child(l)
-	return l
-
-func panel(rect:Rect2,color:Color) -> Panel:
-	var p := Panel.new()
-	p.position = rect.position
-	p.size = rect.size
-	var style := StyleBoxFlat.new()
-	style.bg_color = color
-	style.set_corner_radius_all(18)
-	style.set_border_width_all(1)
-	style.border_color = Color("20314a")
-	p.add_theme_stylebox_override("panel",style)
-	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hud.add_child(p)
-	return p
-
-func button(text:String,rect:Rect2,action:Callable) -> Button:
-	var b := Button.new()
-	b.text = text
-	b.position = rect.position
-	b.size = rect.size
-	b.focus_mode = Control.FOCUS_NONE
-	b.add_theme_font_size_override("font_size",17)
-	for state in ["normal","hover","pressed"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("14283b") if state == "normal" else Color("25455f")
-		style.set_corner_radius_all(10)
-		style.set_border_width_all(1)
-		style.border_color = Color("35516c")
-		b.add_theme_stylebox_override(state,style)
-	b.pressed.connect(action)
-	hud.add_child(b)
-	return b
 
 func refresh() -> void:
 	for child in blocks.get_children():
@@ -264,13 +104,9 @@ func refresh() -> void:
 	var signature := str(rules.queue.slice(0,3))+str(rules.held_type)
 	if signature != preview_signature:
 		preview_signature = signature
-		for container in previews:
-			container.queue_free()
-		previews.clear()
-		for i in range(min(3,rules.queue.size())):
-			preview_piece(rules.queue[i], Vector2(-138, 150 + i * 126), 1.0 if i == 0 else 0.85, Vector2(1, 0))
-		if rules.held_type >= 0:
-			preview_piece(rules.held_type, Vector2(138, -170), 0.95, Vector2(0, 1))
+		for index: int in previews.size():
+			update_preview(previews[index], rules.queue[index] if index < rules.queue.size() else -1)
+		update_preview(%Hold, rules.held_type)
 	score_label.text = "%06d" % rules.score
 	level_label.text = "%02d" % rules.level
 	lines_label.text = "%02d" % rules.lines
@@ -278,45 +114,16 @@ func refresh() -> void:
 	if rules.game_over:
 		best = max(best,rules.score)
 		overlay_title.text = "GAME OVER"
-		overlay_text.text = "Score %d  ·  Best %d\nPress R to play again" % [rules.score,best]
+		overlay_text.text = hud_text(&"hud.result", {"score": rules.score, "best": best})
 		overlay.show()
 		status_label.text = "SESSION COMPLETE"
 		completed.emit({"score": rules.score, "lines": rules.lines})
 
-func preview_piece(type: int, pixel: Vector2, s: float, anchor: Vector2) -> void:
-	var container := SubViewportContainer.new()
-	container.anchor_left = anchor.x
-	container.anchor_right = anchor.x
-	container.anchor_top = anchor.y
-	container.anchor_bottom = anchor.y
-	container.position = pixel - Vector2(110, 50)
-	container.size = Vector2(220,100)
-	container.stretch = true
-	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hud.add_child(container)
-	previews.append(container)
-	var viewport := SubViewport.new()
-	viewport.size = Vector2i(440,200)
-	viewport.transparent_bg = true
-	viewport.own_world_3d = true
-	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
-	container.add_child(viewport)
-	var root := Node3D.new()
-	viewport.add_child(root)
-	environment_for(root)
-	var camera := Camera3D.new()
-	camera.projection = Camera3D.PROJECTION_ORTHOGONAL
-	camera.size = 3.2
-	camera.position = Vector3(0.9,0.6,10)
-	camera.look_at_from_position(camera.position,Vector3.ZERO)
-	root.add_child(camera)
-	var cells: Array = rules.cells(type,0)
-	var avg := Vector2.ZERO
-	for c in cells:
-		avg += Vector2(c)
-	avg /= 4.0
-	for c in cells:
-		tile(root,Vector3((c.x-avg.x)*s,-(c.y-avg.y)*s,0),type,false,s)
+func update_preview(slot: Control, piece_type: int) -> void:
+	slot.visible = piece_type >= 0
+	if slot.visible:
+		slot.tint = COLORS[piece_type]
+		slot.cells = rules.cells(piece_type, 0)
 
 func _unhandled_key_input(event:InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
