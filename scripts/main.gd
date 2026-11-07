@@ -1,7 +1,12 @@
 extends Node3D
+const Controls = preload("res://games/protocols/godot_party_default_protocol/solo_controls.gd")
+const Settings = preload("res://games/minigame/godot_party_default_russian_block/settings.gd")
+var controls: Controls = Controls.new(Settings.schema())
+var _active: bool = false
+var _stopped: bool = false
+var _text_source: RefCounted
 
 signal completed(metrics: Dictionary)
-const SoloRound = preload("res://games/protocols/godot_party_default_protocol/solo_round.gd")
 const DefaultText: Translation = preload("res://games/minigame/godot_party_default_russian_block/i18n/zh_Hans.po")
 var _i18n: RefCounted
 
@@ -39,10 +44,10 @@ var paused := false
 var demo := false
 var flash_time := 0.0
 var best := 0
+var _completion_reported: bool = false
 
 func _ready() -> void:
-	if get_parent() is SoloRound:
-		_i18n = get_parent().api.i18n
+	_i18n = _text_source
 	cube = RoundedCube.create_mesh()
 	for color in COLORS:
 		var mat := StandardMaterial3D.new()
@@ -69,10 +74,14 @@ func _ready() -> void:
 	overlay_text = %OverlayText
 	pause_button = %PauseButton
 	pause_button.pressed.connect(toggle_pause)
+	pause_button.text = "暂停 / P" if controls.context != null else "暂停 / Esc / P"
 	best = personal_best
 	rules.reset()
 	refresh()
-	if "--demo" in OS.get_cmdline_user_args():
+	$GameHUD.hide()
+	if controls.context == null:
+		solo_start()
+	if controls.context == null and "--demo" in OS.get_cmdline_user_args():
 		set_demo()
 
 func tile(parent:Node3D,pos:Vector3,type:int,ghost:bool=false,scale_value:float=1.0) -> void:
@@ -117,7 +126,9 @@ func refresh() -> void:
 		overlay_text.text = hud_text(&"hud.result", {"score": rules.score, "best": best})
 		overlay.show()
 		status_label.text = "SESSION COMPLETE"
-		completed.emit({"score": rules.score, "lines": rules.lines})
+		if not _completion_reported:
+			_completion_reported = true
+			completed.emit({"score": rules.score, "lines": rules.lines})
 
 func update_preview(slot: Control, piece_type: int) -> void:
 	slot.visible = piece_type >= 0
@@ -125,36 +136,36 @@ func update_preview(slot: Control, piece_type: int) -> void:
 		slot.tint = COLORS[piece_type]
 		slot.cells = rules.cells(piece_type, 0)
 
-func _unhandled_key_input(event:InputEvent) -> void:
-	if not event is InputEventKey or not event.pressed or event.echo:
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not controls.allowed():
 		return
-	if event.keycode == KEY_R:
+	if controls.matches(event, &"block_restart"):
 		restart()
 		return
-	if event.keycode in [KEY_ESCAPE,KEY_P]:
+	if controls.matches(event, &"block_pause") or (controls.context == null and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE):
 		toggle_pause()
 		return
 	if paused or rules.game_over:
 		return
 	var changed := false
-	if event.keycode in [KEY_LEFT,KEY_A]:
+	if controls.matches(event, &"block_left"):
 		changed = rules.move(-1,0)
 		held_dir = -1
 		move_time = -0.14
-	elif event.keycode in [KEY_RIGHT,KEY_D]:
+	elif controls.matches(event, &"block_right"):
 		changed = rules.move(1,0)
 		held_dir = 1
 		move_time = -0.14
-	elif event.keycode == KEY_X:
+	elif controls.matches(event, &"block_clockwise"):
 		changed = rules.rotate_piece(1)
-	elif event.keycode == KEY_Z:
+	elif controls.matches(event, &"block_counterclockwise"):
 		changed = rules.rotate_piece(-1)
-	elif event.keycode in [KEY_UP,KEY_SPACE]:
+	elif controls.matches(event, &"block_hard_drop"):
 		var old_lines: int = rules.lines
 		rules.hard_drop()
 		on_lock(old_lines)
 		changed = true
-	elif event.keycode in [KEY_C,KEY_SHIFT]:
+	elif controls.matches(event, &"block_hold"):
 		changed = rules.hold_piece()
 		if changed:
 			gravity_time = 0
@@ -167,6 +178,8 @@ func _unhandled_key_input(event:InputEvent) -> void:
 		refresh()
 
 func _process(delta:float) -> void:
+	if not _active:
+		return
 	if flash_time > 0:
 		flash_time -= delta
 		if flash_time <= 0:
@@ -175,8 +188,8 @@ func _process(delta:float) -> void:
 		return
 	elapsed += delta
 	var dir := 0
-	if Input.is_physical_key_pressed(KEY_LEFT) or Input.is_physical_key_pressed(KEY_A): dir -= 1
-	if Input.is_physical_key_pressed(KEY_RIGHT) or Input.is_physical_key_pressed(KEY_D): dir += 1
+	if controls.is_pressed(&"block_left"): dir -= 1
+	if controls.is_pressed(&"block_right"): dir += 1
 	if dir != held_dir:
 		held_dir = dir
 		move_time = -0.14
@@ -189,7 +202,7 @@ func _process(delta:float) -> void:
 					lock_time = 0
 					lock_resets += 1
 				refresh()
-	var soft := Input.is_physical_key_pressed(KEY_DOWN) or Input.is_physical_key_pressed(KEY_S)
+	var soft := controls.is_pressed(&"block_soft_drop")
 	gravity_time += delta
 	var interval:float = speed_profile.interval(elapsed)
 	if soft: interval = 0.035
@@ -219,14 +232,17 @@ func on_lock(old_lines:int) -> void:
 		flash_time = 1.8
 
 func toggle_pause() -> void:
+	if not controls.allowed():
+		return
 	if rules.game_over: return
 	paused = not paused
 	overlay_title.text = "PAUSED"
-	overlay_text.text = "Take a breath.\nESC / P to resume"
+	overlay_text.text = "Take a breath.\nP to resume · Esc opens menu" if controls.context != null else "Take a breath.\nESC / P to resume"
 	overlay.visible = paused
-	pause_button.text = "RESUME   /   ESC" if paused else "PAUSE   /   ESC"
+	pause_button.text = "RESUME   /   P" if paused else "PAUSE   /   P"
 
 func restart() -> void:
+	_completion_reported = false
 	elapsed = 0
 	rules.reset()
 	paused = false
@@ -237,7 +253,7 @@ func restart() -> void:
 	held_dir = 0
 	flash_time = 0
 	overlay.hide()
-	pause_button.text = "PAUSE   /   ESC"
+	pause_button.text = "PAUSE   /   P"
 	status_label.text = "READY TO STACK"
 	refresh()
 
@@ -250,5 +266,40 @@ func set_demo() -> void:
 
 
 func _notification(what:int) -> void:
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT and is_instance_valid(overlay) and not paused and not rules.game_over:
+	if controls.context == null and what == NOTIFICATION_APPLICATION_FOCUS_OUT and is_instance_valid(overlay) and not paused and not rules.game_over:
 		toggle_pause()
+
+## Injected before entering the tree. F6 leaves the formal dependencies unset.
+func solo_setup(input: PartyInput, text_source: RefCounted) -> void:
+	controls.bind(input)
+	_text_source = text_source
+
+
+func solo_start() -> void:
+	if _stopped:
+		return
+	_active = true
+	controls.enabled = true
+	$GameHUD.show()
+
+func solo_stop() -> void:
+	if _stopped:
+		return
+	_stopped = true
+	_active = false
+	controls.enabled = false
+	set_process(false)
+	set_physics_process(false)
+	set_process_unhandled_input(false)
+	set_process_unhandled_key_input(false)
+	if not is_node_ready():
+		return
+	held_dir = 0
+	move_time = 0.0
+	$GameHUD.hide()
+
+func solo_graphics_targets() -> Dictionary:
+	return {"world": $WorldEnvironment1, "sun": $DirectionalLight3D2}
+
+func solo_audio_target() -> PartyGameAudio:
+	return null

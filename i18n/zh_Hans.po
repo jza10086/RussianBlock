@@ -18,3 +18,30 @@ msgstr "{board}   {score}"
 
 msgid "hud.guide"
 msgstr "1 / 2{third}  SELECT\nTAB  NEXT BOARD\n← / →  MOVE\n↑ / SPACE  DROP\nX / Z  ROTATE\n↓  SOFT DROP\nC  HOLD\nQ / E  ATTACK\n, / .  AIM {aim}\nP / ESC  PAUSE\nR  RESTART\nF1  FREE FOR ALL\nF2  TEAM"
+
+msgid "向左"
+msgstr "向左"
+
+msgid "向右"
+msgstr "向右"
+
+msgid "软降"
+msgstr "软降"
+
+msgid "硬降"
+msgstr "硬降"
+
+msgid "顺时针旋转"
+msgstr "顺时针旋转"
+
+msgid "逆时针旋转"
+msgstr "逆时针旋转"
+
+msgid "暂存"
+msgstr "暂存"
+
+msgid "重新开始"
+msgstr "重新开始"
+
+msgid "暂停"
+msgstr "暂停"
