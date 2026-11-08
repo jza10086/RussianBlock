@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "core_api_major": 4,
-  "package_version": "1.0.0",
+  "package_version": "1.0.1",
   "id": "godot_party_default_russian_block",
   "name": "圆角俄罗斯方块",
   "kind": "minigame",
@@ -12,7 +12,7 @@
   ],
   "introduction": "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。",
   "dependencies": {
-    "godot_party_default_protocol": "1.0.0"
+    "godot_party_default_protocol": "1.0.1"
   },
   "adapters": [
     {
