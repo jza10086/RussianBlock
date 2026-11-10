@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/party.gd" id="party"]
-[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_russian_block/ffa_layout.tscn" id="ffa"]
-[ext_resource type="PackedScene" path="res://games/minigame/godot_party_default_russian_block/team_layout.tscn" id="team"]
+[ext_resource type="Script" path="res://games/minigame/gp_tetris/scripts/party.gd" id="party"]
+[ext_resource type="PackedScene" path="res://games/minigame/gp_tetris/ffa_layout.tscn" id="ffa"]
+[ext_resource type="PackedScene" path="res://games/minigame/gp_tetris/team_layout.tscn" id="team"]
 
 [sub_resource type="Environment" id="Env"]
 background_mode = 1

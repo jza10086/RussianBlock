@@ -2,8 +2,8 @@ class_name BattleSession
 extends RefCounted
 ## Local, renderer-independent session. Feed submit_action() from a future transport.
 signal game_event(event: Dictionary)
-const Rules = preload("res://games/minigame/godot_party_default_russian_block/scripts/tetris_rules.gd")
-var speed_profile = preload("res://games/minigame/godot_party_default_russian_block/assets/speed_profile.tres")
+const Rules = preload("res://games/minigame/gp_tetris/scripts/tetris_rules.gd")
+var speed_profile = preload("res://games/minigame/gp_tetris/assets/speed_profile.tres")
 var mode := "ffa"
 var boards: Array = []
 var elapsed := 0.0

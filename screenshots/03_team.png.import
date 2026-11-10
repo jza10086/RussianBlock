@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbsfxp64yjeqf"
-path="res://.godot/imported/03_team.png-2b50d396350cf55d8f23dd89b0927579.ctex"
+path="res://.godot/imported/03_team.png-4b64f672aa5be99f803ca937a968e599.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/minigame/godot_party_default_russian_block/screenshots/03_team.png"
-dest_files=["res://.godot/imported/03_team.png-2b50d396350cf55d8f23dd89b0927579.ctex"]
+source_file="res://games/minigame/gp_tetris/screenshots/03_team.png"
+dest_files=["res://.godot/imported/03_team.png-4b64f672aa5be99f803ca937a968e599.ctex"]
 
 [params]
 

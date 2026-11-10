@@ -1,21 +1,21 @@
 extends Node3D
 const Controls = preload("res://games/protocols/godot_party_default_protocol/solo_controls.gd")
-const Settings = preload("res://games/minigame/godot_party_default_russian_block/settings.gd")
+const Settings = preload("res://games/minigame/gp_tetris/settings.gd")
 var controls: Controls = Controls.new(Settings.schema())
 var _active: bool = false
 var _stopped: bool = false
 var _text_source: RefCounted
 
 signal completed(metrics: Dictionary)
-const DefaultText: Translation = preload("res://games/minigame/godot_party_default_russian_block/i18n/zh_Hans.po")
+const DefaultText: Translation = preload("res://games/minigame/gp_tetris/i18n/zh_Hans.po")
 var _i18n: RefCounted
 
 func hud_text(key: StringName, values: Dictionary) -> String:
 	return DefaultText.get_message(key).format(values) if _i18n == null else _i18n.text(key, values)
 
 var personal_best: int = 0
-const Rules = preload("res://games/minigame/godot_party_default_russian_block/scripts/tetris_rules.gd")
-const RoundedCube = preload("res://games/minigame/godot_party_default_russian_block/scripts/rounded_cube.gd")
+const Rules = preload("res://games/minigame/gp_tetris/scripts/tetris_rules.gd")
+const RoundedCube = preload("res://games/minigame/gp_tetris/scripts/rounded_cube.gd")
 const COLORS = [Color("5dd9ee"),Color("f7cd64"),Color("b49afa"),Color("7cdfbd"),Color("fb8596"),Color("81a9ff"),Color("f7a66d")]
 var rules = Rules.new()
 var cube: ArrayMesh
@@ -34,7 +34,7 @@ var overlay_title: Label
 var overlay_text: Label
 var pause_button: Button
 var elapsed := 0.0
-@export var speed_profile: Resource = preload("res://games/minigame/godot_party_default_russian_block/assets/speed_profile.tres")
+@export var speed_profile: Resource = preload("res://games/minigame/gp_tetris/assets/speed_profile.tres")
 var gravity_time := 0.0
 var lock_time := 0.0
 var lock_resets := 0

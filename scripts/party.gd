@@ -1,5 +1,5 @@
-extends "res://games/minigame/godot_party_default_russian_block/scripts/main.gd"
-const Session = preload("res://games/minigame/godot_party_default_russian_block/scripts/battle_session.gd")
+extends "res://games/minigame/gp_tetris/scripts/main.gd"
+const Session = preload("res://games/minigame/gp_tetris/scripts/battle_session.gd")
 var session = Session.new()
 var selected := 0
 var aim_column := 4
@@ -14,7 +14,7 @@ var repeat_timers := {}
 
 func _ready() -> void:
 	if "--classic" in OS.get_cmdline_user_args():
-		get_tree().change_scene_to_file.call_deferred("res://games/minigame/godot_party_default_russian_block/classic.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://games/minigame/gp_tetris/classic.tscn")
 		return
 	for layout: Node3D in [$FreeForAll, $Team]:
 		var buttons: Array[Node] = layout.find_children("Select*", "Button", true, false)
@@ -163,8 +163,8 @@ func _process(delta: float) -> void:
 
 func capture() -> void:
 	await RenderingServer.frame_post_draw
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://games/minigame/godot_party_default_russian_block/screenshots"))
-	screenshot_path = "res://games/minigame/godot_party_default_russian_block/screenshots/02_ffa.png" if session.mode=="ffa" else "res://games/minigame/godot_party_default_russian_block/screenshots/03_team.png"
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://games/minigame/gp_tetris/screenshots"))
+	screenshot_path = "res://games/minigame/gp_tetris/screenshots/02_ffa.png" if session.mode=="ffa" else "res://games/minigame/gp_tetris/screenshots/03_team.png"
 	var result := get_viewport().get_texture().get_image().save_png(screenshot_path)
 	print("Screenshot: ",ProjectSettings.globalize_path(screenshot_path)," result=",result)
 

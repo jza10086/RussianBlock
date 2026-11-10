@@ -1,5 +1,5 @@
 [gd_resource type="Resource" script_class="StackSpeedProfile" load_steps=2 format=3]
-[ext_resource type="Script" path="res://games/minigame/godot_party_default_russian_block/scripts/speed_profile.gd" id="1"]
+[ext_resource type="Script" path="res://games/minigame/gp_tetris/scripts/speed_profile.gd" id="1"]
 [resource]
 script = ExtResource("1")
 start_interval = 0.85
