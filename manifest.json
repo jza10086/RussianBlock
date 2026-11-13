@@ -1,52 +1,10 @@
 {
-  "manifest_version": 2,
-  "core_api_major": 6,
-  "package_version": "1.0.15",
-  "id": "gp_tetris",
   "name": "圆角俄罗斯方块",
   "kind": "minigame",
-  "supported_systems": [
-    "windows"
-  ],
-  "config_schema": "settings.gd",
-  "entry": "party_round.tscn",
-  "player_counts": [
-    1
-  ],
-  "introduction": "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。",
+  "package_version": "0.0.1",
+  "framework_version": "0.0.1",
+  "remark": "",
   "dependencies": {
-    "godot_party_default_protocol": "1.0.14"
-  },
-  "adapters": [
-    {
-      "id": "standard",
-      "protocol": {
-        "id": "godot_party_default_protocol",
-        "api_major": 1,
-        "min_api_minor": 0
-      },
-      "config_schema": "settings.gd",
-      "entry": "adapter.gd"
-    }
-  ],
-  "localization": {
-    "supported_locales": [
-      "zh_Hans"
-    ],
-    "fallback_locale": "zh_Hans",
-    "translations": {
-      "zh_Hans": "i18n/zh_Hans.po"
-    }
-  },
-  "controls": {
-    "block_left": "向左",
-    "block_right": "向右",
-    "block_soft_drop": "软降",
-    "block_hard_drop": "硬降",
-    "block_clockwise": "顺时针旋转",
-    "block_counterclockwise": "逆时针旋转",
-    "block_hold": "暂存",
-    "block_restart": "重新开始",
-    "block_pause": "暂停"
+    "godot_party_default_protocol": "~0.0.1"
   }
 }
