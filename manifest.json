@@ -1,11 +1,13 @@
 {
   "manifest_version": 2,
   "core_api_major": 5,
-  "package_version": "1.0.12",
+  "package_version": "1.0.14",
   "id": "gp_tetris",
   "name": "圆角俄罗斯方块",
   "kind": "minigame",
-  "supported_systems": ["windows"],
+  "supported_systems": [
+    "windows"
+  ],
   "config_schema": "settings.gd",
   "entry": "party_round.tscn",
   "player_counts": [
@@ -13,7 +15,7 @@
   ],
   "introduction": "经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。",
   "dependencies": {
-    "godot_party_default_protocol": "1.0.11"
+    "godot_party_default_protocol": "1.0.13"
   },
   "adapters": [
     {
