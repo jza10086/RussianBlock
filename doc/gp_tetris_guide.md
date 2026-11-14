@@ -97,25 +97,9 @@ scripts/battle_session.gd 是无渲染会话层：
 
 当前无 socket、RPC、房间、鉴权、玩家身份绑定、输入同步、回滚、重连或网络权威裁决。接入时需自行在服务器验证操控权限和团队当前席位，并维护权威时钟、随机数状态和输入序列；不要把本地示范直接当作可上线网络协议。
 
-## 测试
+## 验证
 
-将 GODOT 指向官方 4.7.2 二进制，在项目目录执行：
-
-    "$GODOT" --headless --path . --script tests/test_rules.gd
-    "$GODOT" --headless --path . --script tests/test_runtime.gd
-    "$GODOT" --headless --path . --script tests/test_battle_session.gd
-    "$GODOT" --headless --path . --script tests/test_party_runtime.gd
-    "$GODOT" --headless --path . --quit-after 120
-    "$GODOT" --headless --path . --quit-after 120 -- --team --demo
-
-受限环境将 XDG_CONFIG_HOME、XDG_DATA_HOME、XDG_CACHE_HOME 指向可写目录。测试覆盖原规则、动态宽度、落定积分、干扰碰撞/顶出、邻接规则、计时暂停、队内轮换、道具补给、模式切换、独立输入、重开和结束。
-
-
-### 本次验证记录
-
-官方 Godot 4.7.2 无头验证：规则 393 项、经典集成 19 项、会话 130 项、对战界面集成 153 项，共 695 项全部通过（包含仅三处 HUD、排行榜排序、分数更新、选中指示、无面板 / 按钮底框、真实透视相机、0° 正面视角（零俯仰、横向偏转和滚转）、边框和分界线、完整棋盘体积八角投影不裁切、大棋盘占屏高度、紧凑间距、文字不重叠和模型比例回归）。默认个人战、团队演示、经典模式各 120 帧 smoke 均通过，无错误或资源泄漏告警。
-
-既有功能 GUI 曾验证独立棋盘硬降、队内轮换、暂停、干扰落点和选择后计分。紧凑横向布局和三处 HUD 保持不变；0° 正面版本截图应从最新 GUI 重拍，演示截图采用确定性种子和暂停状态，图上不再出现 DEMO / PAUSED 标签，交付时在说明中标注演示局面。
+最近记录与未完成验收见 [gp_tetris 开发记录](gp_tetris_development.md)。按本次改动选取必要检查；旧测试命令不作为当前入口。
 
 ## 截图与文件
 
@@ -138,3 +122,9 @@ scripts/battle_session.gd 是无渲染会话层：
 此接入仅覆盖 `classic.tscn` 的单人经典模式；P 为玩法暂停，Esc 为正式菜单。独立多盘演示保持原状，不代表在线多人接入。无音频组件，三维画质交由协议。
 
 经典单人模式。移动、旋转与落下方块，堆满后按得分和消行数结算。
+
+## 包内开发文档
+
+未带 `res://` 的源码路径以本包根目录为基准。
+
+- [M05 圆角俄罗斯方块　A　依赖 G02](gp_tetris_development.md)
