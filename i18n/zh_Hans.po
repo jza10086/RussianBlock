@@ -45,3 +45,6 @@ msgstr "重新开始"
 
 msgid "暂停"
 msgstr "暂停"
+
+msgid "package.name"
+msgstr "圆角俄罗斯方块"

@@ -1,7 +1,7 @@
 extends Control
 var elapsed := 0.0
-var profile = preload("res://games/minigame/gp_tetris/assets/speed_profile.tres")
-const Session = preload("res://games/minigame/gp_tetris/scripts/battle_session.gd")
+var profile = preload("res://games/minigame/GP_tetris/assets/speed_profile.tres")
+const Session = preload("res://games/minigame/GP_tetris/scripts/battle_session.gd")
 func _draw() -> void:
 	var points := PackedVector2Array()
 	for i in 101:

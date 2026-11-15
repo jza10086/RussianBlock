@@ -99,7 +99,7 @@ scripts/battle_session.gd 是无渲染会话层：
 
 ## 验证
 
-最近记录与未完成验收见 [gp_tetris 开发记录](gp_tetris_development.md)。按本次改动选取必要检查；旧测试命令不作为当前入口。
+最近记录与未完成验收见 [GP_tetris 开发记录](GP_tetris_development.md)。按本次改动选取必要检查；旧测试命令不作为当前入口。
 
 ## 截图与文件
 
@@ -127,4 +127,4 @@ scripts/battle_session.gd 是无渲染会话层：
 
 未带 `res://` 的源码路径以本包根目录为基准。
 
-- [M05 圆角俄罗斯方块　A　依赖 G02](gp_tetris_development.md)
+- [M05 圆角俄罗斯方块　A　依赖 G02](GP_tetris_development.md)

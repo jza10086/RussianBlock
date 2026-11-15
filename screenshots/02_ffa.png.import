@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://games/minigame/gp_tetris/screenshots/02_ffa.png"
+source_file="res://games/minigame/GP_tetris/screenshots/02_ffa.png"
 dest_files=["res://.godot/imported/02_ffa.png-5c4c3bd29788f7fc0f556b8a3e33e38a.ctex"]
 
 [params]

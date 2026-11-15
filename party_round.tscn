@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://games/minigame/gp_tetris/ui/round_pages.tscn" id="protocol_pages"]
+[ext_resource type="PackedScene" path="res://games/minigame/GP_tetris/ui/round_pages.tscn" id="protocol_pages"]
 
-[ext_resource type="Script" path="res://games/minigame/gp_tetris/entry_rules.gd" id="1"]
+[ext_resource type="Script" path="res://games/minigame/GP_tetris/entry_rules.gd" id="1"]
 [ext_resource type="PackedScene" path="classic.tscn" id="2"]
 
 [node name="SoloRound" type="Control" node_paths=PackedStringArray("briefing", "settlement")]

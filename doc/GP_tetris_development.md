@@ -2,10 +2,10 @@
 
 来源：2026-11-07 架构审查及其最后实施记录。整理日期：2026-11-14。下列待办保留原状态；实施前核对本包源码与工作区，不以历史检查代替本次验收。
 
-[共享 G01–G03 任务](../../../protocols/godot_party_default_protocol/doc/godot_party_default_protocol_development.md) · [包说明](gp_tetris_guide.md)
+[共享 G01–G03 任务](../../../protocols/GP_default_protocol/doc/GP_default_protocol_development.md) · [包说明](GP_tetris_guide.md)
 
 
-包：`gp_tetris`。定位：[scripts/main.gd](../scripts/main.gd)、[scripts/party.gd](../scripts/party.gd)、`scripts/battle_session.gd`。
+包：`GP_tetris`。定位：[scripts/main.gd](../scripts/main.gd)、[scripts/party.gd](../scripts/party.gd)、`scripts/battle_session.gd`。
 
 - [x] 正式经典模式的横移、软降、硬降、旋转、暂存全部改为声明动作；连续物理键轮询也必须遵守输入门控，不能只改事件回调。
 - [ ] 经典玩法、独立多盘演示和正式 Party 接入明确分开；保留现有多盘预览，不把同屏演示自动宣布为已接入的在线多人模式。
