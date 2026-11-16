@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bbiy7hmous2rr"
-path="res://.godot/imported/01_gameplay.png-bc3bf05a957e0826e75c5b1d97c590d5.ctex"
+path="res://.godot/imported/01_gameplay.png-0a99eff949ed17c50bcdbf36d0570d12.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://games/minigame/GP_tetris/screenshots/01_gameplay.png"
-dest_files=["res://.godot/imported/01_gameplay.png-bc3bf05a957e0826e75c5b1d97c590d5.ctex"]
+dest_files=["res://.godot/imported/01_gameplay.png-0a99eff949ed17c50bcdbf36d0570d12.ctex"]
 
 [params]
 
